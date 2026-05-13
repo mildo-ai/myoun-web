@@ -1,0 +1,372 @@
+/* ============================================================================
+ * 묘운 (MyoUn) — Design Tokens v0.2 (Color Optimization)
+ * ----------------------------------------------------------------------------
+ * 변경 핵심:
+ *   1. 베이지 톤다운: #FAF6F0 → #F4EFE6  (노란 끼 ↓, 차분한 한지)
+ *   2. 액센트 깊이 ↑: #B85042 (brick) → #7A3329 (어두운 단청)
+ *      → 본문 7.86:1 AAA 통과, 묘운 절제미 강화
+ *   3. ink.tertiary 대비: 3.21:1 FAIL → 5.10:1 AA OK
+ *   4. 시맨틱 전반 AA 통과 보강
+ *   5. 다크모드 ink/액센트 톤 따뜻함 ↑ (먹+한지 일관성)
+ *   6. ink/먹 컬러 warm-tone 미세 조정 (#1A1714)
+ *
+ * 검증 기준: WCAG 2.2 AA (4.5:1 본문 / 3:1 큰글자) 전 조합 통과
+ *           AAA (7:1 본문) 핵심 조합 통과 (헤드라인/CTA)
+ *
+ * 디자인 원칙 (PRD §1.4 + §10.3):
+ *   - 저채도 베이지/먹색 + 포인트 1색 (단청 어두운 톤)
+ *   - 중성톤 미니멀 — 친근하지만 가볍지 않음, 진중하지만 무겁지 않음
+ *   - 동양 전통 살짝 + 깔끔 모던
+ *   - 신비/도사 톤 절대 금지
+ * ============================================================================ */
+
+/* ----------------------------------------------------------------------------
+ * WEBFONTS — brand-uploaded files (no Google Fonts substitutes)
+ * ---------------------------------------------------------------------------- */
+@font-face {
+  font-family: "Pretendard Variable";
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  src: url("./fonts/PretendardVariable.ttf") format("truetype-variations"),
+       url("./fonts/PretendardVariable.ttf") format("truetype");
+}
+
+/* Noto Serif KR — variable axis (wght 200–900) for Hanja & Saju display */
+@font-face {
+  font-family: "Noto Serif KR";
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+  src: url("./fonts/NotoSerifKR-VariableFont_wght.ttf") format("truetype-variations"),
+       url("./fonts/NotoSerifKR-VariableFont_wght.ttf") format("truetype");
+}
+
+/* Fallback static Bold (older browsers / variable-axis-unsupported) */
+@font-face {
+  font-family: "Noto Serif KR Static";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("./fonts/NotoSerifKR-Bold.ttf") format("truetype");
+}
+
+/* ----------------------------------------------------------------------------
+ * COLOR — Light Mode (Default)
+ * 한지(韓紙) + 먹(墨) + 단청(丹青) 절제 — 한국 전통 절제미
+ * ---------------------------------------------------------------------------- */
+:root,
+:root[data-theme="light"] {
+  /* Backgrounds — 한지 톤 (warm off-white, 노란 끼 제거) */
+  --color-bg-primary:        #F4EFE6;  /* 한지 표준 — 차분 베이지 (was #FAF6F0) */
+  --color-bg-secondary:      #EDE5D6;  /* 한지 한 단계 깊은 카드 (was #F2EBE0) */
+  --color-bg-tertiary:       #E5DCC8;  /* 카드 위 카드, 칩 배경 (NEW) */
+  --color-surface-elevated:  #FCFAF5;  /* 흰에 가까운 한지 (was #FFFFFF) */
+  --color-surface-overlay:   rgba(26, 23, 20, 0.04); /* 한지 오버레이 */
+
+  /* Ink — 먹(墨) warm-tone */
+  --color-ink-primary:       #1A1714;  /* 따뜻한 먹 (was #1A1A1A) */
+  --color-ink-secondary:     #4A453F;  /* warm gray secondary (was #4A4A4A) */
+  --color-ink-tertiary:      #6B6459;  /* AA 통과 ↑ caption/disclaimer (was #8A8A8A 3.21:1) */
+  --color-ink-on-accent:     #FFFFFF;  /* 단청 위 흰 텍스트 (9.00:1 AAA) */
+  --color-ink-on-dark:       #F0E8D8;  /* 다크 위 한지 ink */
+
+  /* Accent — 단청(丹青) 어두운 톤 (저채도, 절제) */
+  --color-accent-primary:    #7A3329;  /* 어두운 단청 (was #B85042 brick) */
+  --color-accent-muted:      #A04437;  /* hover/secondary 단청 라이트 */
+  --color-accent-subtle:     #D4B895;  /* 옅은 황토 — chip bg, 그림자 (was #E8C4A0) */
+  --color-accent-50:         #F9F0E8;  /* 단청 10% wash — alert bg */
+  --color-accent-100:        #EFD6CB;  /* 단청 20% wash — selected state */
+
+  /* Border / Divider — 한지 결 */
+  --color-divider:           #DDD3BE;  /* 한지 divider (was #E5DDD0) */
+  --color-border-subtle:     #E5DCC8;  /* 카드 1px outline */
+  --color-border-strong:     #BFB39C;  /* input focus, table border */
+
+  /* Semantic — 자연/먹 톤 (모두 AA 통과) */
+  --color-success:           #4F6E4D;  /* 먹빛 green 5.00:1 (was #5C7A5C 4.17 FAIL) */
+  --color-success-bg:        #E8EDDF;  /* light alert bg */
+  --color-warning:           #8C5A1B;  /* 호박 깊은 5.10:1 (NEW) */
+  --color-warning-bg:        #F4E8D0;
+  --color-error:             #9C3D2E;  /* 단청 dark 5.88:1 (was #B85042 4.30 FAIL) */
+  --color-error-bg:          #F4DAD3;
+  --color-info:              #4A5D75;  /* 먹 청 5.89:1 (was #6E7B8B 3.77 FAIL) */
+  --color-info-bg:           #DDE3EB;
+
+  /* 오행 (Five Elements) — saju card 색상 indicator 보조 */
+  --color-element-wood:      #4F6E4D;  /* 木 — 먹 green */
+  --color-element-fire:      #9C3D2E;  /* 火 — 단청 dark */
+  --color-element-earth:     #8C5A1B;  /* 土 — 호박 */
+  --color-element-metal:     #6B6459;  /* 金 — 회색 */
+  --color-element-water:     #4A5D75;  /* 水 — 먹 청 */
+}
+
+/* ----------------------------------------------------------------------------
+ * COLOR — Dark Mode (Splash + system dark 통일)
+ * 먹(墨) deep + 한지(韓紙) reverse + 단청 light 톤
+ * ---------------------------------------------------------------------------- */
+:root[data-theme="dark"] {
+  /* Backgrounds — 먹 deep, warm tone (차가워지지 않게) */
+  --color-bg-primary:        #181311;  /* 먹 deep warm (was #14110E) */
+  --color-bg-secondary:      #221C18;  /* warm graphite */
+  --color-bg-tertiary:       #2C2520;  /* elevated warm (NEW) */
+  --color-surface-elevated:  #2A2520;  /* 카드 elevated (was #2A251F) */
+  --color-surface-overlay:   rgba(240, 232, 216, 0.06);
+
+  /* Ink — 한지 reverse warm */
+  --color-ink-primary:       #F0E8D8;  /* warm 한지 reverse (was #F5EDE0) */
+  --color-ink-secondary:     #C4BAA5;  /* 한지 secondary (was #C8BFAE) */
+  --color-ink-tertiary:      #8C8472;  /* AA 통과 강화 (was #8A8275) */
+  --color-ink-on-accent:     #181311;  /* 다크 단청 위 어두운 텍스트 (5.99:1) */
+  --color-ink-on-dark:       #F0E8D8;
+
+  /* Accent — 단청 light, 다크모드 가시성 확보 */
+  --color-accent-primary:    #D17C70;  /* 단청 dark light (was #D4756A) */
+  --color-accent-muted:      #B66459;  /* hover/secondary */
+  --color-accent-subtle:     #5A4A38;  /* 옅은 황토 dark */
+  --color-accent-50:         #2A1F1A;  /* 단청 wash dark */
+  --color-accent-100:        #3A2A22;
+
+  /* Border / Divider */
+  --color-divider:           #332A22;  /* 먹 결 (was #2F2A24) */
+  --color-border-subtle:     #2C2520;
+  --color-border-strong:     #4A3F33;
+
+  /* Semantic — dark mode (모두 AA 통과) */
+  --color-success:           #7BA174;  /* 6.31:1 */
+  --color-success-bg:        #1F2A1E;
+  --color-warning:           #D4A063;  /* 7.90:1 AAA */
+  --color-warning-bg:        #2C2218;
+  --color-error:             #D17C70;  /* 5.99:1 */
+  --color-error-bg:          #2A1F1A;
+  --color-info:              #8B9DB3;  /* 6.64:1 */
+  --color-info-bg:           #1F242C;
+
+  /* 오행 — dark mode */
+  --color-element-wood:      #7BA174;
+  --color-element-fire:      #D17C70;
+  --color-element-earth:     #D4A063;
+  --color-element-metal:     #8C8472;
+  --color-element-water:     #8B9DB3;
+}
+
+/* ----------------------------------------------------------------------------
+ * SHADOW — 한지 카드 입체감 (warm-tone, 절제)
+ * v0.1: rgba(26,26,26,...) cool gray
+ * v0.2: rgba(26,23,20,...) warm 먹-tone
+ * ---------------------------------------------------------------------------- */
+:root,
+:root[data-theme="light"] {
+  /* sm — 카드, 칩, 버튼 hover */
+  --shadow-sm:
+    0 1px 2px rgba(26, 23, 20, 0.04),
+    0 2px 4px rgba(26, 23, 20, 0.03);
+
+  /* md — 기본 카드 (한지 입체감) */
+  --shadow-md:
+    0 1px 2px rgba(26, 23, 20, 0.05),
+    0 4px 12px rgba(26, 23, 20, 0.05);
+
+  /* lg — elevated 카드 (사주 hero card, AHA card) */
+  --shadow-lg:
+    0 2px 8px rgba(26, 23, 20, 0.06),
+    0 8px 24px rgba(26, 23, 20, 0.07),
+    0 16px 48px rgba(26, 23, 20, 0.04);
+
+  /* xl — bottom sheet, modal */
+  --shadow-xl:
+    0 -2px 8px rgba(26, 23, 20, 0.04),
+    0 -8px 32px rgba(26, 23, 20, 0.08);
+
+  /* focus — 단청 outline */
+  --shadow-focus:
+    0 0 0 3px rgba(122, 51, 41, 0.20);
+}
+
+:root[data-theme="dark"] {
+  /* dark mode shadows are subtle, warm */
+  --shadow-sm:
+    0 1px 2px rgba(0, 0, 0, 0.30),
+    0 2px 4px rgba(0, 0, 0, 0.20);
+  --shadow-md:
+    0 1px 2px rgba(0, 0, 0, 0.35),
+    0 4px 12px rgba(0, 0, 0, 0.25);
+  --shadow-lg:
+    0 2px 8px rgba(0, 0, 0, 0.40),
+    0 8px 24px rgba(0, 0, 0, 0.30),
+    0 16px 48px rgba(0, 0, 0, 0.25);
+  --shadow-xl:
+    0 -2px 8px rgba(0, 0, 0, 0.30),
+    0 -8px 32px rgba(0, 0, 0, 0.40);
+  --shadow-focus:
+    0 0 0 3px rgba(209, 124, 112, 0.30);
+}
+
+/* ----------------------------------------------------------------------------
+ * TYPOGRAPHY — Pretendard + Noto Serif KR (Hanja Display)
+ * ---------------------------------------------------------------------------- */
+:root {
+  /* Font families */
+  --font-sans:   "Pretendard Variable", "Pretendard", -apple-system,
+                 BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif;
+  --font-serif:  "Noto Serif KR", "Apple SD Gothic Neo", serif; /* Hanja, Saju 카드 */
+  --font-mono:   "SF Mono", "JetBrains Mono", ui-monospace, monospace;
+  --font-numeric:"SF Pro Rounded", "SF Pro Text", -apple-system, system-ui;
+
+  /* Type scale (pt — iOS native point) */
+  --text-display-xl: 36px;   --leading-display-xl: 44px;   --tracking-display-xl: -1.0px;
+  --text-display-lg: 28px;   --leading-display-lg: 36px;   --tracking-display-lg: -0.5px;
+  --text-display-md: 24px;   --leading-display-md: 32px;   --tracking-display-md: -0.4px;
+
+  --text-heading-lg: 22px;   --leading-heading-lg: 30px;   --tracking-heading-lg: -0.3px;
+  --text-heading-md: 18px;   --leading-heading-md: 26px;   --tracking-heading-md: -0.2px;
+  --text-heading-sm: 16px;   --leading-heading-sm: 22px;   --tracking-heading-sm: -0.1px;
+
+  --text-body-lg:    17px;   --leading-body-lg:    26px;   --tracking-body-lg:    0;
+  --text-body-md:    15px;   --leading-body-md:    24px;   --tracking-body-md:    0;
+  --text-body-sm:    13px;   --leading-body-sm:    20px;   --tracking-body-sm:    0.1px;
+
+  --text-caption:    11px;   --leading-caption:    16px;   --tracking-caption:    0.2px;
+
+  /* Hanja-specific (Saju card 일간 한자) */
+  --text-hanja-xl:   64px;   --leading-hanja-xl:   72px;   --tracking-hanja-xl:   -2px;
+  --text-hanja-lg:   48px;   --leading-hanja-lg:   56px;   --tracking-hanja-lg:   -1.5px;
+
+  /* Font weights */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+}
+
+/* ----------------------------------------------------------------------------
+ * SPACING — 4-base scale (iOS 4pt grid)
+ * ---------------------------------------------------------------------------- */
+:root {
+  --space-xxs: 4px;
+  --space-xs:  8px;
+  --space-sm:  12px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+}
+
+/* ----------------------------------------------------------------------------
+ * RADIUS
+ * ---------------------------------------------------------------------------- */
+:root {
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-2xl:  32px;
+  --radius-pill: 9999px;
+}
+
+/* ----------------------------------------------------------------------------
+ * MOTION — Apple-like spring (PRD §디자인 시스템 §Motion)
+ * ---------------------------------------------------------------------------- */
+:root {
+  --duration-micro:    200ms;
+  --duration-standard: 320ms;
+  --duration-large:    500ms;
+
+  --easing-standard:   cubic-bezier(0.32, 0.72, 0, 1);
+  --easing-emphasized: cubic-bezier(0.20, 0.80, 0.20, 1);
+  --easing-decelerate: cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+/* ----------------------------------------------------------------------------
+ * TAP TARGET — iOS HIG 44×44pt 최소
+ * ---------------------------------------------------------------------------- */
+:root {
+  --tap-min:        44px;
+  --tap-comfortable: 48px;
+  --tap-large:       56px;
+}
+
+/* ----------------------------------------------------------------------------
+ * COMPONENT TOKENS
+ * ---------------------------------------------------------------------------- */
+:root {
+  /* Buttons */
+  --button-height-sm:  40px;
+  --button-height-md:  48px;
+  --button-height-lg:  56px;
+
+  /* Input */
+  --input-height:      56px;
+  --input-radius:      var(--radius-md);
+  --input-border-w:    1.5px;
+
+  /* Card */
+  --card-padding-sm:   var(--space-md);
+  --card-padding-md:   var(--space-lg);
+  --card-padding-lg:   var(--space-xl);
+
+  /* Bottom sheet */
+  --sheet-radius:      var(--radius-xl);
+  --sheet-max-h:       90vh;
+
+  /* 음양 ring (브랜드 시그너처) */
+  --yinyang-ring-w:    1.5px;
+  --yinyang-ring-color: var(--color-accent-primary);
+}
+
+/* ----------------------------------------------------------------------------
+ * UTILITY CLASSES (iOS UI Kit, optional)
+ * ---------------------------------------------------------------------------- */
+
+/* 한지 텍스처 (3% opacity max — PRD 명시) */
+.han-paper-texture {
+  background-image:
+    radial-gradient(rgba(26, 23, 20, 0.025) 1px, transparent 1px),
+    radial-gradient(rgba(26, 23, 20, 0.020) 1px, transparent 1px);
+  background-size: 24px 24px, 16px 16px;
+  background-position: 0 0, 8px 8px;
+}
+
+/* 음양 ring (얇은 라인) */
+.yinyang-ring {
+  border: var(--yinyang-ring-w) solid var(--yinyang-ring-color);
+  border-radius: var(--radius-pill);
+}
+
+/* 먹 brushstroke 라인 (절제된 단청 라인) */
+.brushstroke-divider {
+  height: 1.5px;
+  width: 32px;
+  background: var(--color-accent-primary);
+  border-radius: 1px;
+  display: inline-block;
+}
+
+/* ============================================================================
+ * APPENDIX — RGB 변환표 (디자이너용)
+ * ----------------------------------------------------------------------------
+ * Light Mode:
+ *   bg.primary    #F4EFE6 → rgb(244, 239, 230)
+ *   bg.secondary  #EDE5D6 → rgb(237, 229, 214)
+ *   ink.primary   #1A1714 → rgb(26, 23, 20)
+ *   ink.secondary #4A453F → rgb(74, 69, 63)
+ *   ink.tertiary  #6B6459 → rgb(107, 100, 89)
+ *   accent.prim   #7A3329 → rgb(122, 51, 41)
+ *   accent.muted  #A04437 → rgb(160, 68, 55)
+ *
+ * Dark Mode:
+ *   bg.primary    #181311 → rgb(24, 19, 17)
+ *   ink.primary   #F0E8D8 → rgb(240, 232, 216)
+ *   accent.prim   #D17C70 → rgb(209, 124, 112)
+ *
+ * 변경사항 v0.1 → v0.2:
+ *   bg.primary       #FAF6F0 → #F4EFE6  (-6 RGB, 노란끼 ↓ 차분한 한지)
+ *   accent.primary   #B85042 → #7A3329  (단청 깊이 ↑, AAA 통과)
+ *   ink.tertiary     #8A8A8A → #6B6459  (3.21:1 FAIL → 5.10:1 AA)
+ *   success          #5C7A5C → #4F6E4D  (4.17 FAIL → 5.00:1)
+ *   error            #B85042 → #9C3D2E  (4.30 FAIL → 5.88:1)
+ *   info             #6E7B8B → #4A5D75  (3.77 FAIL → 5.89:1)
+ * ============================================================================ */
